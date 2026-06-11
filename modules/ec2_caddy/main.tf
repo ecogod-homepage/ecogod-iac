@@ -19,6 +19,7 @@ resource "aws_instance" "this" {
   subnet_id                   = var.subnet_id
   vpc_security_group_ids      = var.vpc_security_group_ids
   iam_instance_profile        = var.instance_profile_name
+  key_name                    = var.key_name
   associate_public_ip_address = true
 
   credit_specification {
@@ -29,11 +30,13 @@ resource "aws_instance" "this" {
               #!/bin/bash
               set -eux
               apt-get update
-              apt-get install -y debian-keyring debian-archive-keyring apt-transport-https curl
+              apt-get install -y debian-keyring debian-archive-keyring apt-transport-https curl ca-certificates gnupg git unzip docker.io
               curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
               curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list
               apt-get update
               apt-get install -y caddy
+              systemctl enable docker
+              systemctl start docker
               cat >/etc/caddy/Caddyfile <<CADDY
               ${var.domain_name} {
                 reverse_proxy localhost:8080

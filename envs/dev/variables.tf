@@ -62,6 +62,15 @@ variable "instance_type" {
   default = "t3.micro"
 }
 
+variable "key_pair_name" {
+  type    = string
+  default = "ecogod-dev"
+}
+
+variable "ssh_allowed_cidr" {
+  type = string
+}
+
 variable "frontend_bucket_name" {
   type = string
 }
