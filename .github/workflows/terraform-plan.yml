@@ -1,0 +1,21 @@
+name: terraform-plan
+
+on:
+  pull_request:
+    paths:
+      - 'bootstrap/**'
+      - 'envs/**'
+      - 'modules/**'
+      - '.github/workflows/terraform-plan.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform -chdir=bootstrap init -backend=false
+      - run: terraform -chdir=bootstrap validate
+      - run: terraform -chdir=envs/dev init -backend=false
+      - run: terraform -chdir=envs/dev validate

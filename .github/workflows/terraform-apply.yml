@@ -1,0 +1,18 @@
+name: terraform-apply
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'bootstrap/**'
+      - 'envs/**'
+      - 'modules/**'
+      - '.github/workflows/terraform-apply.yml'
+
+jobs:
+  apply-dev:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - run: echo 'Enable after AWS OIDC or deployment credentials are configured.'
