@@ -28,10 +28,7 @@ resource "aws_vpc_security_group_ingress_rule" "cidr" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "sg" {
-  for_each = {
-    for idx, rule in var.ingress_rules : idx => rule
-    if try(rule.source_security_group_id, null) != null
-  }
+  for_each = { for idx, rule in var.ingress_sg_rules : idx => rule }
 
   security_group_id            = aws_security_group.this.id
   description                  = each.value.description

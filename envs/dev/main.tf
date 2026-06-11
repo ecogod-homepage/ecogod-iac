@@ -120,7 +120,7 @@ module "db_security_group" {
   name        = "${var.project}-db"
   description = "MySQL access for ecogod RDS"
   vpc_id      = data.aws_vpc.default.id
-  ingress_rules = [
+  ingress_sg_rules = [
     {
       from_port                = 3306
       to_port                  = 3306
