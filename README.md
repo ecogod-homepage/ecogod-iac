@@ -3,7 +3,7 @@
 Terraform infrastructure for ecogod.
 
 ## Scope
-- Route53 public hosted zone
+- Existing Route53 public hosted zone
 - S3 buckets for frontend and assets
 - CloudFront for `www.<root_domain>` and `assets.<root_domain>`
 - EC2 `t3.micro` with Caddy for `api.<root_domain>`

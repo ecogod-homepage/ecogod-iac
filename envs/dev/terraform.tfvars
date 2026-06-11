@@ -1,6 +1,6 @@
 aws_profile          = "capstone"
 aws_region           = "ap-northeast-2"
-root_domain          = "ecogod.co.kr"
+root_domain          = "ecogod.kr"
 frontend_bucket_name = "ecogod-frontend-site"
 asset_bucket_name    = "ecogod-asset-site"
 db_name              = "ecogod"
