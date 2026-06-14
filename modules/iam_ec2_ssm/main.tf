@@ -20,6 +20,17 @@ data "aws_iam_policy_document" "ssm_read" {
   }
 }
 
+data "aws_iam_policy_document" "asset_write" {
+  statement {
+    actions = [
+      "s3:PutObject",
+      "s3:DeleteObject",
+      "s3:GetObject"
+    ]
+    resources = ["${var.asset_bucket_arn}/${var.asset_object_prefix}*"]
+  }
+}
+
 resource "aws_iam_role" "this" {
   name               = var.role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
@@ -35,6 +46,12 @@ resource "aws_iam_role_policy" "ssm_read" {
   name   = "${var.role_name}-ssm-read"
   role   = aws_iam_role.this.id
   policy = data.aws_iam_policy_document.ssm_read.json
+}
+
+resource "aws_iam_role_policy" "asset_write" {
+  name   = "${var.role_name}-asset-write"
+  role   = aws_iam_role.this.id
+  policy = data.aws_iam_policy_document.asset_write.json
 }
 
 resource "aws_iam_instance_profile" "this" {

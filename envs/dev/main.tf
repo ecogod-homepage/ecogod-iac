@@ -138,6 +138,7 @@ module "iam_ec2_ssm" {
   role_name             = "${var.project}-ec2-role"
   instance_profile_name = "${var.project}-ec2-profile"
   ssm_parameter_prefix  = var.ssm_parameter_prefix
+  asset_bucket_arn      = module.asset_bucket.bucket_arn
   tags                  = local.common_tags
 }
 
@@ -178,6 +179,8 @@ module "ssm_namespace" {
     "${var.ssm_parameter_prefix}/server/jwt/secret",
     "${var.ssm_parameter_prefix}/server/mail/username",
     "${var.ssm_parameter_prefix}/server/mail/password",
+    "${var.ssm_parameter_prefix}/server/storage/s3/bucket",
+    "${var.ssm_parameter_prefix}/server/storage/s3/public-base-url",
     "${var.ssm_parameter_prefix}/client/api/base-url"
   ]
   tags = local.common_tags
